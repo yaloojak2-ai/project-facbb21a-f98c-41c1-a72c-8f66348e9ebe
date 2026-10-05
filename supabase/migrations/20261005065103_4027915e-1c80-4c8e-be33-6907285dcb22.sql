@@ -1,0 +1,10 @@
+REVOKE EXECUTE ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.guard_appointment_update() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.prevent_overlap() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.grant_owner_role() FROM PUBLIC, anon, authenticated;
+REVOKE EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.is_salon_owner(uuid) FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.is_salon_staff(uuid) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_salon_owner(uuid) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_salon_staff(uuid) TO authenticated;
