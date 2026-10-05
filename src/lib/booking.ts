@@ -3,7 +3,7 @@ export type Hours = { barber_id: string; day_of_week: number; start_time: string
 
 const toMin = (t: string) => {
   const [h, m] = t.split(":").map(Number);
-  return h * 60 + m;
+  return (h ?? 0) * 60 + (m ?? 0);
 };
 
 export function dayBounds(date: Date) {

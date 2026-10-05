@@ -71,7 +71,7 @@ function Ticket() {
   const cancel = async () => {
     if (!confirm("هل تريد إلغاء الحجز؟")) return;
     const { error } = await supabase.from("appointments").update({ status: "cancelled" }).eq("id", id);
-    if (error) return toast.error("تعذّر الإلغاء");
+    if (error) { toast.error("تعذّر الإلغاء"); return; }
     toast.success("تم إلغاء الحجز");
     qc.invalidateQueries();
   };
