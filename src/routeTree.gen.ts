@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as SalonIdRouteImport } from './routes/salon.$id'
 import { Route as AuthenticatedTicketIdRouteImport } from './routes/_authenticated/ticket.$id'
 
@@ -35,6 +36,11 @@ const AuthenticatedBookingsRoute = AuthenticatedBookingsRouteImport.update({
   path: '/bookings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const SalonIdRoute = SalonIdRouteImport.update({
   id: '/salon/$id',
   path: '/salon/$id',
@@ -50,6 +56,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof AuthenticatedBookingsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/salon/$id': typeof SalonIdRoute
   '/ticket/$id': typeof AuthenticatedTicketIdRoute
 }
@@ -57,6 +64,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof AuthenticatedBookingsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/salon/$id': typeof SalonIdRoute
   '/ticket/$id': typeof AuthenticatedTicketIdRoute
 }
@@ -66,20 +74,23 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/salon/$id': typeof SalonIdRoute
   '/_authenticated/ticket/$id': typeof AuthenticatedTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/bookings' | '/salon/$id' | '/ticket/$id'
+  fullPaths:
+    '/' | '/auth' | '/bookings' | '/dashboard' | '/salon/$id' | '/ticket/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/bookings' | '/salon/$id' | '/ticket/$id'
+  to: '/' | '/auth' | '/bookings' | '/dashboard' | '/salon/$id' | '/ticket/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/bookings'
+    | '/_authenticated/dashboard'
     | '/salon/$id'
     | '/_authenticated/ticket/$id'
   fileRoutesById: FileRoutesById
@@ -121,6 +132,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBookingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/salon/$id': {
       id: '/salon/$id'
       path: '/salon/$id'
@@ -140,11 +158,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedTicketIdRoute: typeof AuthenticatedTicketIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedTicketIdRoute: AuthenticatedTicketIdRoute,
 }
 
